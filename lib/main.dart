@@ -36,6 +36,12 @@ class _MyHomePageState extends State<MyHomePage> {
   List _childrens = [];
   List _childrenss = [];
   List<dynamic> _itemss = [];
+
+  @override
+  void initState(){
+    super.initState();
+    readJson();
+  }
   Future<void> readJson() async {
     final String response = await rootBundle.loadString('lib/data.json');
     final data = await json.decode(response);
@@ -63,6 +69,9 @@ class _MyHomePageState extends State<MyHomePage> {
     log("====>_childrenss${_childrenss}");
   }
 
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,29 +88,31 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
 
             // Display the data loaded from sample.json
-            _items.isNotEmpty
-                ? Expanded(
+            // _items.isNotEmpty
+            //     ?
+            Expanded(
                     child: ListView.builder(
-                      itemCount: _itemss.length,
+                      itemCount: _items.length,
                       itemBuilder: (context, index) {
                         return Card(
                           margin: const EdgeInsets.all(10),
                           child: ListTile(
                             title: Text(
-                              _itemss[index]["Children"],
-                              // style: TextStyle(
-                              //     color: double.parse(_items[index]["PackageAmount"].toString()) > 0 &&
-                              //             double.parse(_items[index]["TotalExpectedIncome"].toString()) <
-                              //                 double.parse(_items[index]["TotalExpectedIncome"].toString())
-                              //         ? Colors.red
-                              //         : Colors.black)
+                              _items[index]["Id"].toString(),
+                              style: TextStyle(
+                                  color: double.parse(_items[index]["PackageAmount"].toString()) > 0
+                                      // &&
+                                      //     double.parse(_items[index]["TotalExpectedIncome"].toString()) <
+                                      //         double.parse(_items[index]["TotalExpectedIncome"].toString())
+                                      ? Colors.red
+                                      : Colors.black)
                             ),
                           ),
                         );
                       },
                     ),
                   )
-                : Container()
+              //  : Container()
           ],
         ),
       ),
